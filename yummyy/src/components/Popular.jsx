@@ -1,22 +1,44 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import {Splide, SplideSlide} from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import {Splide, SplideSlide} from '@splidejs/react-splide';
+import { GiForkKnifeSpoon } from 'react-icons/gi';
+import React from "react";
+
+const style = { color: "rgb(222, 104, 100)", fontSize: "1.5rem", margin: '0px 10px 0px 10px'}
+
+
+
+
+
+
 
 function Popular() {
 
   const [popular, setPopular] = useState([]);
-
+  
+  
     useEffect(() =>{
         getPopular();
     },[]);
 
     const getPopular = async () => {
+
+      const check = localStorage.getItem('popular');
+      if(check){
+        setPopular(JSON.parse(check));
+      }else{
+        const apiKey = 'a0ef93691a754665b3e0205ec1210cb0';
         const api = await fetch(
-            `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9`
-            );
+          `https://api.spoonacular.com/recipes/random?apiKey=` + apiKey + `&number=9`
+          );
         const data = await api.json();
+
+        localStorage.setItem('popular', JSON.stringify(data.recipes));
         setPopular(data.recipes);
+      }
+
+        
     }
 
 
@@ -28,13 +50,13 @@ function Popular() {
             <Splide options={{
               perPage: 4,
               drag: 'free',
-              gap:'5rem',
+              gap:'1rem',
             }}>
               {popular.map((recipe) => {
                 return (
                   <SplideSlide>
                     <Card key={recipe.id}>
-                      <p>{recipe.title}</p>
+                      <p><GiForkKnifeSpoon style={style}/>{recipe.title}</p>
                       <img src={recipe.image} alt={recipe.title}/>
                       
                     </Card>
@@ -59,7 +81,7 @@ const Card = styled.div`
   border-radius: 2rem;
   overflow: hidden;
   position: relative;
-  width: 18vw;
+  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,12 +103,13 @@ const Card = styled.div`
     width: 100%;
     text-align: center;
     font-weight:600;
-    font-size:1rem;
-    height:70%;
+    font-size:80%;
+    height:20%;
     display:flex;
     align-items:center;
-    background: white;
+    background: rgba(255,255,255,0.9);
   }
 `;
+
 
 export default Popular
