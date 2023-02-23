@@ -3,6 +3,7 @@ import styled from "styled-components";
 import '@splidejs/react-splide/css';
 import {Splide, SplideSlide} from '@splidejs/react-splide';
 import { GiWrappedSweet } from 'react-icons/gi';
+import {Link} from 'react-router-dom';
 
 import React from "react";
 
@@ -24,7 +25,7 @@ function Desserts() {
       if(check){
         setDessert(JSON.parse(check));
       }else{
-        const apiKey = 'a0ef93691a754665b3e0205ec1210cb0';
+        const apiKey = '01f3e0b247b645daa7ac075670e93dad';
         const api = await fetch(
           `https://api.spoonacular.com/recipes/complexSearch?cuisine=&apiKey=` + apiKey + `&number=9`
           );
@@ -52,9 +53,10 @@ function Desserts() {
                 return (
                     <SplideSlide>
                     <Card key={recipe.id}>
-                        <p><GiWrappedSweet style={style}/>{recipe.title}</p>
-                        <img src={recipe.image} alt={recipe.title}/>
-                        
+                        <Link to={"/Recipes/" + recipe.id}>
+                          <p><GiWrappedSweet style={style}/>{recipe.title}</p>
+                          <img src={recipe.image} alt={recipe.title}/>
+                       </Link> 
                     </Card>
                     </SplideSlide>
                 ); 
@@ -74,14 +76,12 @@ margin: 4rem 0rem;
 
 
 const Card = styled.div`
-min-height: 15rem;
+min-height: 12rem;
 border-radius: 2rem;
 overflow: hidden;
 position: relative;
 
 display: flex;
-align-items: center;
-justify-content: center;
 
 img{
   border-radius: 1rem;
@@ -95,7 +95,7 @@ p{
   position:absolute;
   z-index: 10;
   bottom:0%;
-  transform: trasnlate(-50%, 0%);
+ 
   color: black;
   width: 100%;
   text-align: center;

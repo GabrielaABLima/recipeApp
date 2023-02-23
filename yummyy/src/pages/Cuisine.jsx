@@ -6,7 +6,7 @@ import {Link, useParams} from 'react-router-dom';
 function Cuisine() {
 
     const [cuisine, setCuisine] = useState([]);
-    const apiKey = 'a0ef93691a754665b3e0205ec1210cb0';
+    const apiKey = '01f3e0b247b645daa7ac075670e93dad';
     let params = useParams();
 
     const getCuisine = async (name) => {
@@ -25,11 +25,13 @@ function Cuisine() {
     <Grid>
         {cuisine.map((item) => {
             return(
+                <Link to={"/Recipe/" + item.id}>
                 <Card key={item.id}>
                     <img src={item.image} alt=""/>
                     <h4>{item.title}</h4>
 
                 </Card>
+                </Link>
             ) 
         })}
     </Grid>

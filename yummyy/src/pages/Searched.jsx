@@ -2,13 +2,14 @@ import React from 'react'
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 function Searched() {
 
     const[searchedRecipes, setSearchedRecipes] = useState([]);
     let params = useParams();
      
-    const apiKey = 'a0ef93691a754665b3e0205ec1210cb0';
+    const apiKey = '01f3e0b247b645daa7ac075670e93dad';
     const getSearched = async (name) => {
         const data = await fetch(
             `https://api.spoonacular.com/recipes/complexSearch?query=${name}&apiKey=` + apiKey + `&number=9`
@@ -25,10 +26,12 @@ function Searched() {
     <Grid>
         {searchedRecipes.map((item) => {
             return(
-                <Card key={item.id}>
-                    <img src={item.image} alt=""/>
-                    <h4>{item.title}</h4>
-                </Card>
+                <Link to={"/Recipe/" + item.id}>
+                    <Card key={item.id}>
+                        <img src={item.image} alt=""/>
+                        <h4>{item.title}</h4>
+                    </Card>
+                </Link>
             )
         })}
     </Grid>

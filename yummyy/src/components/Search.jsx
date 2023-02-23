@@ -45,11 +45,12 @@ const FormStyled = styled.form`
         border-radius: 1rem;
         outline: none;
         width:100%;
+        margin-top: 5rem;
     }
 
     svg{
         position: absolute;
-        top: 50%;
+        top: 80%;
         left: 0%;
         transform: translate(100%, -50%);
         color: white;

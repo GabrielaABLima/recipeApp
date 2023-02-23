@@ -4,6 +4,7 @@ import '@splidejs/react-splide/css';
 import {Splide, SplideSlide} from '@splidejs/react-splide';
 import { GiForkKnifeSpoon } from 'react-icons/gi';
 import React from "react";
+import {Link} from 'react-router-dom';
 
 const style = { color: "rgb(222, 104, 100)", fontSize: "1.5rem", margin: '0px 10px 0px 10px'}
 
@@ -28,7 +29,7 @@ function Popular() {
       if(check){
         setPopular(JSON.parse(check));
       }else{
-        const apiKey = 'a0ef93691a754665b3e0205ec1210cb0';
+        const apiKey = '01f3e0b247b645daa7ac075670e93dad';
         const api = await fetch(
           `https://api.spoonacular.com/recipes/random?apiKey=` + apiKey + `&number=9`
           );
@@ -56,9 +57,10 @@ function Popular() {
                 return (
                   <SplideSlide>
                     <Card key={recipe.id}>
-                      <p><GiForkKnifeSpoon style={style}/>{recipe.title}</p>
-                      <img src={recipe.image} alt={recipe.title}/>
-                      
+                      <Link to={"/Recipe/" + recipe.id}>
+                        <p><GiForkKnifeSpoon style={style}/>{recipe.title}</p>
+                        <img src={recipe.image} alt={recipe.title}/>
+                      </Link>
                     </Card>
                   </SplideSlide>
                 ); 
@@ -77,14 +79,13 @@ const Wrapper = styled.div`
 
 
 const Card = styled.div`
-  min-height: 15rem;
+  min-height: 12rem;
   border-radius: 2rem;
   overflow: hidden;
   position: relative;
   
   display: flex;
-  align-items: center;
-  justify-content: center;
+
   
   img{
     border-radius: 1rem;
@@ -97,10 +98,10 @@ const Card = styled.div`
   p{
     position:absolute;
     z-index: 10;
-    bottom:0%;
+    bottom: 20%;
     transform: trasnlate(-50%, 0%);
     color: black;
-    width: 100%;
+    width: 102%;
     text-align: center;
     font-weight:600;
     font-size:80%;
@@ -108,6 +109,7 @@ const Card = styled.div`
     display:flex;
     align-items:center;
     background: rgba(255,255,255,0.9);
+    margin-left: -2%;
   }
 `;
 
